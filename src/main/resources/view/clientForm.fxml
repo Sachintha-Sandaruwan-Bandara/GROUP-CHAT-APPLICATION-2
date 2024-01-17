@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="520.0" prefWidth="344.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ClientFormController">
+   <children>
+      <ScrollPane fx:id="scrollPane" layoutX="12.0" layoutY="44.0" prefHeight="373.0" prefWidth="319.0">
+         <content>
+            <VBox fx:id="vBox" prefHeight="46.0" prefWidth="317.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="139.0" layoutY="12.0" prefHeight="19.0" prefWidth="43.0" text="Label" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtField" layoutX="14.0" layoutY="449.0" prefHeight="47.0" prefWidth="208.0" />
+      <JFXButton layoutX="229.0" layoutY="460.0" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: white;" />
+      <JFXButton layoutX="266.0" layoutY="460.0" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: white;" />
+      <JFXButton layoutX="302.0" layoutY="460.0" onAction="#btnSendOnAction" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: white;" />
+   </children>
+</AnchorPane>
