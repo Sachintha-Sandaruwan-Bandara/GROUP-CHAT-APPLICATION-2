@@ -19,7 +19,7 @@ public class Launcher extends Application{
     @Override
     public void start(Stage stage) throws IOException {
 
-        Parent root = FXMLLoader.load(Launcher.class.getResource("/view/clientForm.fxml"));
+        Parent root = FXMLLoader.load(Launcher.class.getResource("/view/loginForm.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         //Image icon= new Image("images/logo.png");
