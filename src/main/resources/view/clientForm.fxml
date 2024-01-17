@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="520.0" prefWidth="344.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"fx:controller="lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ClientFormController">
+<AnchorPane prefHeight="520.0" prefWidth="344.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ClientFormController">
    <children>
       <ScrollPane fx:id="scrollPane" layoutX="12.0" layoutY="44.0" prefHeight="373.0" prefWidth="319.0">
          <content>
