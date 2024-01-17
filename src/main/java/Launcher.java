@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ChatServer;
 
 import java.io.IOException;
 
@@ -26,5 +27,8 @@ public class Launcher extends Application{
         //stage.getIcons().add(icon);
         stage.setTitle("");
         stage.show();
+
+
     }
+
 }
