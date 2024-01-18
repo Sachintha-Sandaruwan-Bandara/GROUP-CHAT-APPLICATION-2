@@ -4,13 +4,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="RowPane" prefHeight="71.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ChatRowController">
+<AnchorPane fx:id="RowPane" prefHeight="34.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.GROUP_CHAT_APPLICATION_2.controller.ChatRowController">
    <children>
-      <VBox layoutX="164.0" layoutY="2.0" prefHeight="65.0" prefWidth="151.0">
+      <VBox layoutX="164.0" layoutY="2.0" prefHeight="26.0" prefWidth="151.0">
          <children>
-            <Text fx:id="txtMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <VBox prefHeight="25.0" prefWidth="151.0">
+               <children>
+                  <Text fx:id="txtMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <VBox layoutX="4.0" layoutY="4.0" prefHeight="65.0" prefWidth="151.0" />
+      <VBox layoutX="4.0" layoutY="4.0" prefHeight="25.0" prefWidth="151.0">
+         <children>
+            <VBox maxWidth="-Infinity" prefHeight="25.0" prefWidth="151.0">
+               <children>
+                  <Text fx:id="txtReceivedMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </VBox>
+         </children></VBox>
    </children>
 </AnchorPane>
