@@ -1,12 +1,6 @@
 package lk.ijse.GROUP_CHAT_APPLICATION_2.controller;
-/* 
-    @author Sachi_S_Bandara
-    @created 1/17/2024 - 4:50 PM 
-*/
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,11 +37,12 @@ public class ChatClient extends Thread {
                 try {
                     String receivedMessage;
                     while ((receivedMessage = in.readLine()) != null) {
-
-
                         // Update the UI with the received message
-                        clientController.updateChatArea(receivedMessage);
+                        final String msg=receivedMessage;
+                        Platform.runLater(() -> {
 
+                            clientController.updateChatArea(msg);
+                        });
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

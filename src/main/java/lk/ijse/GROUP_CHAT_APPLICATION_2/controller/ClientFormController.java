@@ -1,8 +1,4 @@
 package lk.ijse.GROUP_CHAT_APPLICATION_2.controller;
-/* 
-    @author Sachi_S_Bandara
-    @created 1/17/2024 - 4:53 PM 
-*/
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -30,21 +24,16 @@ public class ClientFormController {
 
     @FXML
     private VBox vBox;
-    @FXML
-    private TextArea txtArea;
 
     private ChatClient chatClient;
 
     String name;
 
     public void initialize() {
-
         chatterName.setText(name);
         chatClient = new ChatClient(name, this);
         chatClient.start();
     }
-
-
 
     @FXML
     void btnSendOnAction(ActionEvent event) throws IOException {
@@ -54,7 +43,7 @@ public class ClientFormController {
             chatClient.sendMessage(message);
 
             // Optionally, you can also update the local UI immediately
-            updateChatArea("me : " + message);
+            updateChatArea("me: " + message);
 
             // Clear the text field
             txtField.clear();
@@ -62,27 +51,37 @@ public class ClientFormController {
     }
 
     // Method to update the local UI with received messages
-    public void updateChatArea(String message) throws IOException {
-
+    public void updateChatArea(String message) {
         System.out.println(message);
-       txtArea.appendText(message+"\n");
 
+        // Load a new chat row and add it to the VBox
+        loadChatRow(message);
+    }
 
+    // Method to load a new chat row
+    private void loadChatRow(String message) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chatRow.fxml"));
+            Node node = fxmlLoader.load();
 
+            // Access the controller and set the message
+            ChatRowController chatRowController = fxmlLoader.getController();
+            chatRowController.setTxtMsg(message);
 
-        // You need to implement this method based on your UI structure
-        // For example, you might add a new Text node to the VBox or update a TextArea
-        // This method will be called by the ChatClient when a new message is received
-        // and you want to update the UI.
+            // Add the new chat row to the VBox
+            vBox.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btnSndImgOnAction(ActionEvent event) {
-
+        // You can implement image sending logic here
     }
 
     @FXML
     void btnSndImjiOnAction(ActionEvent event) {
-
+        // You can implement emoji sending logic here
     }
 }
