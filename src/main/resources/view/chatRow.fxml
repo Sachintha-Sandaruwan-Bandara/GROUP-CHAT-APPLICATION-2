@@ -12,7 +12,7 @@
             <VBox prefHeight="25.0" prefWidth="151.0">
                <children>
                   <Text fx:id="txtMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <ImageView fitHeight="13.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="sndImg" fitHeight="13.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
          </children>
@@ -24,6 +24,7 @@
                   <Text fx:id="txtReceivedMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
+            <ImageView fx:id="recImg" fitHeight="13.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children></VBox>
    </children>
 </AnchorPane>

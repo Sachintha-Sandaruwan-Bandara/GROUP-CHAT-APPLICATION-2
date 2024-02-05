@@ -2,6 +2,7 @@ package lk.ijse.GROUP_CHAT_APPLICATION_2.controller;
 
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,11 @@ import javafx.util.Duration;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Base64;
 
 public class ClientFormController {
     @FXML
@@ -47,6 +52,7 @@ public class ClientFormController {
 
     private ChatClient chatClient;
     private boolean isImojiPaneVisible = false;
+    ChatRowController chatRowController;
 
     String name;
 
@@ -138,10 +144,14 @@ public class ClientFormController {
             Node node = fxmlLoader.load();
 
             // Access the controller and set the message
-            ChatRowController chatRowController = fxmlLoader.getController();
+            chatRowController = fxmlLoader.getController();
 
             if (message.startsWith("me")){
                 chatRowController.setTxtMsg(msg);
+            }else if (message.contains("-")){
+                String modifiedMessage = message.substring(message.indexOf("-")+1);
+
+                chatRowController.setRecImg(modifiedMessage);
             }else {
                 chatRowController.setTxtReceivedMsg(msg);
             }
@@ -157,41 +167,65 @@ public class ClientFormController {
     @FXML
     void btnSndImgOnAction(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open a file");
-        fileChooser.setInitialDirectory(new File("C:\\"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPEG Image","*.jpg"), new FileChooser.ExtensionFilter("PNG Image", "*.png"), new FileChooser.ExtensionFilter("All image files","*.jpg","*.png"));
+        fileChooser.setTitle("Select Image File");
+        FileChooser.ExtensionFilter imageFilter =
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File file = fileChooser.showOpenDialog(imojiPane.getScene().getWindow());
+        Image image = new Image(file.toURI().toString());
+        if (file != null) {
+            try {
+                ImageView imageView = new ImageView(file.toURI().toString());
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/chatRow.fxml"));
+                Node node = fxmlLoader.load();
 
+                // Access the controller and set the message
+                chatRowController = fxmlLoader.getController();
+                ImageView sndImg = chatRowController.getSndImg();
+                sndImg.setImage(image);
+                sndImg.setFitHeight(300);
+                sndImg.setFitWidth(200);
 
-        Stage stage = (Stage) imojiPane.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
-        System.out.println(file.getPath());
+                vBox.getChildren().add(node);
 
-// image convert to byte array
-        byte [] imageBytes = readImageToByteArray(file);
-
-
-    }
-    private void displayImage(ImageView imageView, byte[] imageData) {
-        if (imageData != null && imageData.length > 0) {
-            try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageData)) {
-                Image image = new Image(byteArrayInputStream);
-                imageView.setImage(image);
-            } catch (Exception e) {
+                String imgText = convertImageToString(imageView.getImage());
+                chatClient.sendMessage("-"+imgText);
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
     }
-    private byte[] readImageToByteArray(File file) throws IOException {
-        try (FileInputStream fis = new FileInputStream(file);
-             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = fis.read(buffer)) != -1) {
-                bos.write(buffer, 0, bytesRead);
-            }
-            return bos.toByteArray();
+
+
+
+    private String convertImageToString(Image image) throws IOException {
+        double maxWidth = 600;
+        double maxHeight = 400;
+        double width = image.getWidth();
+        double height = image.getHeight();
+
+        if (width > maxWidth || height > maxHeight) {
+            double scaleFactor = Math.min(maxWidth / width, maxHeight / height);
+            width *= scaleFactor;
+            height *= scaleFactor;
         }
+
+        BufferedImage resizedImage = new BufferedImage((int) width, (int) height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, (int) width, (int) height, null);
+        g.dispose();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(resizedImage, "jpg", outputStream);
+
+        byte[] imageBytes = outputStream.toByteArray();
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
+
+
+
 
 
 
